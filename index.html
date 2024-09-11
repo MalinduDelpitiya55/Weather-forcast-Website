@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast</title>
     <link rel="stylesheet" href="./css/index.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
@@ -26,12 +25,12 @@
             </form>
         </div>
     </nav>
-    <ul class="nav justify-content-center">
+    <ul class="nav justify-content-center mt-4">
         <li class="nav-item">
             <form class="d-flex" role="search">
                 <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search"
                     style="width: 450px;">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-success" type="submit" id="searchBtn">Search</button>
             </form>
         </li>
     </ul>
@@ -42,19 +41,20 @@
                 <div class=" d-flex flex-row justify-content-around align-content-center mt-5 ">
                     <div class="align-content-center">
                         <h1 class="align-content-center">
-                            28°C
+                            <span class="fs-1" id="current-temparature"><!--CURRENT Temparature--></span>°C
                         </h1 class="align-content-center">
-                        <p>Min 25°C<br>Max 30°C</p>
+                        <p><span class="fs-4" id="current-high-temparature"><!--CURRENT Temparature--></span>°C<br><span
+                                class="fs-5" id="current-low-temparature"><!--CURRENT Temparature--></span>°C</p>
                     </div>
                     <div class="align-content-center">
                         <h3>
-                            Weligama, LK
+                            <span id="current-city">Weligama</span>, <span id="current-country">LK</span>
                         </h3>
                         <p>Friday, 06 Sep 2024 | Local time: 09:30 PM</p>
 
                     </div>
                     <div class="align-content-center">
-                        <i class="fa-solid fa-cloud"></i>
+                        <img src="" alt="" width="100" id="current-cloud-condition-icon"><br>
                     </div>
                 </div>
                 <div class="d-flex flex-row mx-2 justify-content-center mb-5">
@@ -67,7 +67,7 @@
                                 sunrise
                             </div>
                         </div>
-                        <div class="align-content-center">06:00 AM</div>
+                        <div class="align-content-center"><span class=" fs-3" id="sun-rise"></span></div>
                     </div>
                     <div class="d-flex flex-row mx-5">
                         <div>
@@ -75,10 +75,10 @@
                                 <img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32">
                             </div>
                             <div>
-                                sunrise
+                                sunset
                             </div>
                         </div>
-                        <div class="align-content-center">06:00 AM</div>
+                        <div class="align-content-center"><span class=" fs-3" id="sun-set"></span></div>
                     </div>
                 </div>
 
@@ -89,21 +89,29 @@
                         <div class="d-flex flex-row ">
                             <div><img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32"></div>
                             <div class="align-content-center">Wind</div>
+
+
                         </div>
+                        <div class="align-content-center"><span id="wind"></span>km/h</div>
                         <div class="d-flex flex-row mt-5">
                             <div><img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32"></div>
-                            <div class="align-content-center">Wind</div>
+                            <div class="align-content-center">Humidity</div>
                         </div>
+                        <div class="align-content-center"><span id="humidity"></span>%</div>
                     </div>
 
                     <div>
                         <div class="d-flex flex-row ">
                             <div><img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32"></div>
-                            <div class="align-content-center">Wind</div>
+                            <div class="align-content-center">Visibility</div>
                         </div>
+                        <div class="align-content-center"><span id="visibility"></span>km</div>
                         <div class="d-flex flex-row mt-5">
                             <div><img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32"></div>
-                            <div class="align-content-center">Wind</div>
+                            <div class="align-content-center">Feels Like</div>
+                        </div>
+                        <div class="align-content-center"><span class="fs-5" id="current-feel-temparature"></span>
+                            <span class="fs-5 ">°C</span>
                         </div>
                     </div>
                 </div>
@@ -114,66 +122,66 @@
                     <div class=" rounded-3 border border-dark mt-3 p-5 justify-content-center">
                         <div class="d-flex justify-content-center">
                             <div>
-                                <h5>London</h5>
+                                <h5><span class="fs-4" id="city-1-name"></span></h5>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
                             <div>
-                                <i class="fa-solid fa-cloud"></i>
+                                <img src="" alt="" width="90" id="city-1-forecast">
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <div>
+                            <div id="city-1-text">
                                 <p>light rain</p>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
                             <div>
-                                <h5><b>26°C</b></h5>
+                                <span class="fs-4" id="city-1-temparature">
                             </div>
                         </div>
                     </div>
                     <div class=" rounded-3 border border-dark mt-3 p-5 justify-content-center">
                         <div class="d-flex justify-content-center">
                             <div>
-                                <h5>London</h5>
+                                <h5><span class="fs-4" id="city-2-name"></span></h5>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
                             <div>
-                                <i class="fa-solid fa-cloud"></i>
+                                <img src="" alt="" width="90" id="city-2-forecast">
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <div>
+                            <div id="city-2-text">
                                 <p>light rain</p>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
                             <div>
-                                <h5><b>26°C</b></h5>
+                                <span class="fs-4" id="city-2-temparature">
                             </div>
                         </div>
                     </div>
                     <div class=" rounded-3 border border-dark mt-3 p-5 justify-content-center">
                         <div class="d-flex justify-content-center">
                             <div>
-                                <h5>London</h5>
+                                <h5><span class="fs-4" id="city-3-name"></span></h5>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
                             <div>
-                                <i class="fa-solid fa-cloud"></i>
+                                <img src="" alt="" width="90" id="city-3-forecast">
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <div>
+                            <div id="city-3-text">
                                 <p>light rain</p>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
                             <div>
-                                <h5><b>26°C</b></h5>
+                                <span class="fs-4" id="city-3-temparature">
                             </div>
                         </div>
                     </div>
@@ -191,129 +199,353 @@
                 <div>
                     <br>
                     <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center">Mon</div>
                         <div class="align-content-center">
-                            <i class="fa-solid fa-cloud"></i>
+                            <p class="fs-5 m-2" id="f-day-1">Sun</p>
                         </div>
-                        <div class="align-content-center">25.91°C</div>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="f-day1-icon">
+                        </div>
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day1-date-temp">2</p>
+                        </div>
                     </div>
                     <br>
                     <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center"><i class="fa-solid fa-cloud"></i>5.78 km/h</div>
-                        <div class="align-content-center">moderate rain</div>
-                        <div class="align-content-center"><i class="fa-solid fa-cloud"></i> 87 %</div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day1-date-wind">5.78 km/h</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day1-date-text">moderate rai</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day1-date-rain">7 %</p>
+                        </div>
 
                     </div>
                     <hr>
                 </div>
                 <div>
                     <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center">Mon</div>
                         <div class="align-content-center">
-                            <i class="fa-solid fa-cloud"></i>
+                            <p class="fs-5 m-2" id="f-day-2">Sun</p>
                         </div>
-                        <div class="align-content-center">25.91°C</div>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="f-day2-icon">
+                        </div>
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day2-date-temp">2</p>
+                        </div>
                     </div>
                     <br>
                     <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center"><i class="fa-solid fa-cloud"></i>5.78 km/h</div>
-                        <div class="align-content-center">moderate rain</div>
-                        <div class="align-content-center"><i class="fa-solid fa-cloud"></i> 87 %</div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day2-date-wind">5.78 km/h</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day2-date-text">moderate rai</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day2-date-rain">7 %</p>
+                        </div>
+
+                    </div>
+                    <hr>
+                </div>
+
+                <div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day-3">Sun</p>
+                        </div>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="f-day3-icon">
+                        </div>
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day3-date-temp">2</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day3-date-wind">5.78 km/h</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day3-date-text">moderate rai</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day3-date-rain">7 %</p>
+                        </div>
 
                     </div>
                     <hr>
                 </div>
                 <div>
-                    <div>
-                        <div class="d-flex flex-row justify-content-between">
-                            <div class="align-content-center">Mon</div>
-                            <div class="align-content-center">
-                                <i class="fa-solid fa-cloud"></i>
-                            </div>
-                            <div class="align-content-center">25.91°C</div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day-4">Sun</p>
                         </div>
-                        <br>
-                        <div class="d-flex flex-row justify-content-between">
-                            <div class="align-content-center"><i class="fa-solid fa-cloud"></i>5.78 km/h</div>
-                            <div class="align-content-center">moderate rain</div>
-                            <div class="align-content-center"><i class="fa-solid fa-cloud"></i> 87 %</div>
-
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="f-day4-icon">
                         </div>
-                        <hr>
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day4-date-temp">2</p>
+                        </div>
                     </div>
-                    <div>
-                        <div class="d-flex flex-row justify-content-between">
-                            <div class="align-content-center">Mon</div>
-                            <div class="align-content-center">
-                                <i class="fa-solid fa-cloud"></i>
-                            </div>
-                            <div class="align-content-center">25.91°C</div>
+                    <br>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day4-date-wind">5.78 km/h</p>
                         </div>
-                        <br>
-                        <div class="d-flex flex-row justify-content-between">
-                            <div class="align-content-center"><i class="fa-solid fa-cloud"></i>5.78 km/h</div>
-                            <div class="align-content-center">moderate rain</div>
-                            <div class="align-content-center"><i class="fa-solid fa-cloud"></i> 87 %</div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day4-date-text">moderate rai</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day4-date-rain">7 %</p>
+                        </div>
 
-                        </div>
-                        <hr>
                     </div>
-                    <div>
-                        <div class="d-flex flex-row justify-content-between">
-                            <div class="align-content-center">Mon</div>
-                            <div class="align-content-center">
-                                <i class="fa-solid fa-cloud"></i>
-                            </div>
-                            <div class="align-content-center">25.91°C</div>
-                        </div>
-                        <br>
-                        <div class="d-flex flex-row justify-content-between">
-                            <div class="align-content-center"><i class="fa-solid fa-cloud"></i>5.78 km/h</div>
-                            <div class="align-content-center">moderate rain</div>
-                            <div class="align-content-center"><i class="fa-solid fa-cloud"></i> 87 %</div>
-
-                        </div>
-                        <hr>
-                    </div>
-                    <div>
-                        <div class="d-flex flex-row justify-content-between">
-                            <div class="align-content-center">Mon</div>
-                            <div class="align-content-center">
-                                <i class="fa-solid fa-cloud"></i>
-                            </div>
-                            <div class="align-content-center">25.91°C</div>
-                        </div>
-                        <br>
-                        <div class="d-flex flex-row justify-content-between">
-                            <div class="align-content-center"><i class="fa-solid fa-cloud"></i>5.78 km/h</div>
-                            <div class="align-content-center">moderate rain</div>
-                            <div class="align-content-center"><i class="fa-solid fa-cloud"></i> 87 %</div>
-
-                        </div>
-                        <hr>
-                    </div>
+                    <hr>
                 </div>
-                <div class="d-flex flex-row justify-content-between">
-                    <div class="align-content-center">Mon</div>
-                    <div class="align-content-center">
-                        <i class="fa-solid fa-cloud"></i>
+                <div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day-5">Sun</p>
+                        </div>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="f-day5-icon">
+                        </div>
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day5-date-temp">2</p>
+                        </div>
                     </div>
-                    <div class="align-content-center">25.91°C</div>
-                </div>
-                <br>
-                <div class="d-flex flex-row justify-content-between">
-                    <div class="align-content-center"><i class="fa-solid fa-cloud"></i>5.78 km/h</div>
-                    <div class="align-content-center">moderate rain</div>
-                    <div class="align-content-center"><i class="fa-solid fa-cloud"></i> 87 %</div>
+                    <br>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day5-date-wind">5.78 km/h</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day5-date-text">moderate rai</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day5-date-rain">7 %</p>
+                        </div>
 
+                    </div>
+                    <hr>
                 </div>
-                <hr>
+                <div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day-6">Sun</p>
+                        </div>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="f-day6-icon">
+                        </div>
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day6-date-temp">2</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day6-date-wind">5.78 km/h</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day6-date-text">moderate rai</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day6-date-rain">7 %</p>
+                        </div>
+
+                    </div>
+                    <hr>
+                </div>
+                <div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day-7">Sun</p>
+                        </div>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="f-day7-icon">
+                        </div>
+                        <div class="align-content-center">
+                            <p class="fs-5 m-2" id="f-day7-date-temp">2</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day7-date-wind">5.78 km/h</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day7-date-text">moderate rai</p>
+                        </div>
+                        <div class="align-content-center d-flex flex-row"><i
+                                class="fa-solid fa-cloud align-content-center"></i>
+                            <p class="fs-6 m-2" id="f-day7-date-rain">7 %</p>
+                        </div>
+
+                    </div>
+                    <hr>
+                </div>
             </div>
         </div>
     </div>
-    
+    <div class="mt-5 d-flex justify-content-center align-items-center">
+        <div class="col-11 border border-dark mt-5 p-3">
+            <h3><b>Today Hourly Forcast</b></h3>
+
+            <div class="">
+                <div
+                    class="container-fluid d-flex flex-lg-row flex-md-row flex-sm-row flex-sm-row flex-row  justify-content-around mt-3 ">
+                    <div class="card rounded-4   text-center align-items-center bg-info-subtle p-2 m-2">
+                        <strong>
+                            <p class="fs-4 m-2">00:00 AM</p>
+                        </strong><br>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="today-1-icon">
+                        </div>
+                        <div>
+                            <p class="fs-6 m-2" id="today-1-text">moderate rai</p>
+                        </div>
+
+                        <div>
+                            <span class="fs-6 " id="day-1-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                        </div>
+                    </div>
+                    <div class="card rounded-4 text-center align-items-center bg-info-subtle p-2 m-2">
+                        <strong>
+                            <p class="fs-4 m-2" id="f-day-2">03:00 AM</p>
+                        </strong><br>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="today-2-icon">
+                        </div>
+                        <div>
+                            <p class="fs-6 m-2" id="today-2-text">moderate rai</p>
+                        </div>
+
+                        <div>
+                            <span class="fs-6 " id="day-2-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                        </div>
+                    </div>
+                    <div class="card rounded-4 text-center align-items-center bg-info-subtle p-2 m-2">
+                        <strong>
+                            <p class="fs-4 m-2" id="f-day-3">06:00 AM</p>
+                        </strong><br>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="today-3-icon">
+                        </div>
+                        <div>
+                            <p class="fs-6 m-2" id="today-3-text">moderate rai</p>
+                        </div>
+
+                        <div>
+                            <span class="fs-6 " id="day-3-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                        </div>
+                    </div>
+                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
+                        <strong>
+                            <p class="fs-4 m-2" id="f-day-4">09:00 AM</p>
+                        </strong><br>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="today-4-icon">
+                        </div>
+                        <div>
+                            <p class="fs-6 m-2" id="today-4-text">moderate rai</p>
+                        </div>
+
+                        <div>
+                            <span class="fs-6 " id="day-4-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                        </div>
+                    </div>
+                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
+                        <strong>
+                            <p class="fs-4 m-2" id="f-day-5">12:00 PM</p>
+                        </strong><br>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="today-5-icon">
+                        </div>
+                        <div>
+                            <p class="fs-6 m-2" id="today-5-text">moderate rai</p>
+                        </div>
+
+                        <div>
+                            <span class="fs-6 " id="day-5-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                        </div>
+                    </div>
+                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
+                        <strong>
+                            <p class="fs-4 m-2" id="f-day-6">03:00 PM</p>
+                        </strong><br>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="today-6-icon">
+                        </div>
+                        <div>
+                            <p class="fs-6 m-2" id="today-6-text">moderate rai</p>
+                        </div>
+
+                        <div>
+                            <span class="fs-6 " id="day-6-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                        </div>
+                    </div>
+                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
+                        <strong>
+                            <p class="fs-4 m-2" id="f-day-7">06:00 PM</p>
+                        </strong><br>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="today-7-icon">
+                        </div>
+                        <div>
+                            <p class="fs-6 m-2" id="today-7-text">moderate rai</p>
+                        </div>
+
+                        <div>
+                            <span class="fs-6 " id="day-7-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                        </div>
+                    </div>
+                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
+                        <strong>
+                            <p class="fs-4 m-2" id="f-day-7">09:00 PM</p>
+                        </strong><br>
+                        <div class="align-content-center">
+                            <img src="" alt="" width="50" id="today-8-icon">
+                        </div>
+                        <div>
+                            <p class="fs-6 m-2" id="today-8-text">moderate rai</p>
+                        </div>
+
+                        <div>
+                            <span class="fs-6 " id="day-8-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="./js/index.js"></script>
 
 </body>
-
 
 </html>
