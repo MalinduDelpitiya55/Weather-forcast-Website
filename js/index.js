@@ -13,13 +13,7 @@ async function fetchData(endpoint) {
         console.error('Error fetching data:', error);
     }
 }
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(success);
-} else {
-    console.log("Geolocation is not supported by this browser.");
-}
-
-function getCurrentLocation() {
+async function getGeoLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success);
     } else {
@@ -27,16 +21,36 @@ function getCurrentLocation() {
     }
 }
 
-
-function success(position) {
+async function success(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
+    console.log(`${latitude}, ${longitude}`);
+
     try {
-        currentWeather(latitude, longitude);
+        // Fetch the weather data from the API
+        const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?q=${latitude},${longitude}&days=7&aqi=yes&alerts=yes&key=ee16cdd2901442cdabd52206240703`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        mylocation = data["location"]["name"];
+        console.log("mylocation"+mylocation);
+        currentWeather(mylocation);
+        currentMap(mylocation);
+        updatePastThreeDays(mylocation);
+        futureSevnDays(mylocation);
+
     } catch (error) {
+        alert("Location not Found");
         console.error('Error fetching data:', error);
     }
 }
+
+
 
 // Function to update clock
 function updateClock() {
@@ -61,19 +75,14 @@ function updateClock() {
     // Update clock
     document.getElementById("date-time").textContent = localDateTimeString;
 }
-async function getCurrentLocation(latitude, longitude) {
-    const data = await fetchData(`forecast.json?q=${latitude},${longitude}&days=7&aqi=yes&alerts=yes`);
-    console.log(data);
-    mylocation = data["location"]["name"];
-    currentWeather(mylocation);
- }
+
 
 // Function to fetch and update weather data for current weather
 async function currentWeather(location) {
-    
+    console.log(location);
     const data = await fetchData(`forecast.json?q=${location}&days=7&aqi=yes&alerts=yes`);
-    
-    currentMap(mylocation);
+    this.mylocation = location;
+
     // Update DOM elements with weather data
     document.getElementById("current-city").innerHTML = data["location"]["name"];
     document.getElementById("current-country").innerHTML = data["location"]["country"];
@@ -82,9 +91,9 @@ async function currentWeather(location) {
     // temprature
     document.getElementById("current-temparature").innerHTML = data["current"]["temp_c"];
     document.getElementById("current-cloud-condition").innerHTML = data["current"]["condition"]["text"];
-    document.getElementById("current-feel-temparature").innerHTML = data["current"]["feelslike_c"];
-    document.getElementById("current-high-temparature").innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}`;
-    document.getElementById("current-low-temparature").innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}`;
+    document.getElementById("current-feel-temparature").innerHTML = data["current"]["feelslike_c"] + "°C";
+    document.getElementById("current-high-temparature").innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}` + "°C";
+    document.getElementById("current-low-temparature").innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}` + "°C";
     document.getElementById("current-cloud-condition-icon").src = data["current"]["condition"]["icon"];
 
     // Current details
@@ -117,17 +126,17 @@ async function currentWeather(location) {
             currentUnit.textContent = '°F';
             changingUnit.textContent = '°C';
             document.getElementById("current-temparature").innerHTML = data["current"]["temp_f"];
-            document.getElementById("current-feel-temparature").innerHTML = data["current"]["feelslike_f"];
-            document.getElementById("current-high-temparature").innerHTML = `${data.forecast.forecastday[0].day.maxtemp_f}`;
-            document.getElementById("current-low-temparature").innerHTML = `${data.forecast.forecastday[0].day.mintemp_f}`;
+            document.getElementById("current-feel-temparature").innerHTML = data["current"]["feelslike_f"] + "°F";
+            document.getElementById("current-high-temparature").innerHTML = `${data.forecast.forecastday[0].day.maxtemp_f}` + "°F";
+            document.getElementById("current-low-temparature").innerHTML = `${data.forecast.forecastday[0].day.mintemp_f}` + "°F";
         } else {
             // Checkbox is unchecked, switch to Celsius
             currentUnit.textContent = '°C';
             changingUnit.textContent = '°F';
             document.getElementById("current-temparature").innerHTML = data["current"]["temp_c"];
-            document.getElementById("current-feel-temparature").innerHTML = data["current"]["feelslike_c"];
-            document.getElementById("current-high-temparature").innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}`;
-            document.getElementById("current-low-temparature").innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}`;
+            document.getElementById("current-feel-temparature").innerHTML = data["current"]["feelslike_c"] + "°C";
+            document.getElementById("current-high-temparature").innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}` + "°C";
+            document.getElementById("current-low-temparature").innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}` + "°C";
         }
     });
 }
@@ -142,7 +151,7 @@ async function cityWeather(location, elementsPrefix) {
     // Update DOM elements with weather data
     document.getElementById(`${elementsPrefix}-name`).innerHTML = data["location"]["name"];
     document.getElementById(`${elementsPrefix}-country`).innerHTML = data["location"]["country"];
-    document.getElementById(`${elementsPrefix}-temparature`).innerHTML = data["current"]["temp_c"];
+    document.getElementById(`${elementsPrefix}-temparature`).innerHTML = data["current"]["temp_c"] +"°C";
     document.getElementById(`${elementsPrefix}-forecast`).src = data["current"]["condition"]["icon"];
     document.getElementById(`${elementsPrefix}-text`).innerHTML = data["current"]["condition"]["text"];
 
@@ -155,12 +164,12 @@ async function cityWeather(location, elementsPrefix) {
             // Checkbox is checked, switch to Fahrenheit
             currentUnit.textContent = '°F';
             changingUnit.textContent = '°C';
-            document.getElementById(`${elementsPrefix}-temparature`).innerHTML = data["current"]["temp_f"];
+            document.getElementById(`${elementsPrefix}-temparature`).innerHTML = data["current"]["temp_f"] + "F";
         } else {
             // Checkbox is unchecked, switch to Celsius
             currentUnit.textContent = '°C';
             changingUnit.textContent = '°F';
-            document.getElementById(`${elementsPrefix}-temparature`).innerHTML = data["current"]["temp_c"];
+            document.getElementById(`${elementsPrefix}-temparature`).innerHTML = data["current"]["temp_c"] + "°C";
         }
     });
 
@@ -189,8 +198,8 @@ async function updatePastThreeDays(location) {
                 var weekdayName = weekdays[weekdayNumber];
                 document.getElementById(`p-day-${i}`).innerHTML = weekdayName + "(" + day + ")";
                 document.getElementById(`p-day${i}-img`).src = `${data.forecast.forecastday[0].day.condition.icon}`;
-                document.getElementById(`p-day${i}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}`;
-                document.getElementById(`p-day${i}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}`;
+                document.getElementById(`p-day${i}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}` + "°C";
+                document.getElementById(`p-day${i}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}` + "°C";
 
                 checkbox.addEventListener('change', function () {
                     let reop = {
@@ -200,14 +209,14 @@ async function updatePastThreeDays(location) {
                         // Checkbox is checked, switch to Fahrenheit
                         currentUnit.textContent = '°F';
                         changingUnit.textContent = '°C';
-                        document.getElementById(`p-day${i}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_f}`;
-                        document.getElementById(`p-day${i}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_f}`;
+                        document.getElementById(`p-day${i}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_f}` + "°F";
+                        document.getElementById(`p-day${i}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_f}` + "°F";
                     } else {
                         // Checkbox is unchecked, switch to Celsius
                         currentUnit.textContent = '°C';
                         changingUnit.textContent = '°F';
-                        document.getElementById(`p-day${i}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}`;
-                        document.getElementById(`p-day${i}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}`;
+                        document.getElementById(`p-day${i}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}` + "°C";
+                        document.getElementById(`p-day${i}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}` + "°C";
                     }
                 });
 
@@ -218,7 +227,7 @@ async function updatePastThreeDays(location) {
 
     }
 }
-function futureSevnDays(location) {
+async function futureSevnDays(location) {
     const startDate = new Date();
     let currentDay = new Date(startDate);
     for (let i = 0; i < 7; i++) {
@@ -238,8 +247,8 @@ function futureSevnDays(location) {
                 var weekdayName = weekdays[weekdayNumber];
                 document.getElementById(`f-day-${i + 1}`).innerHTML = weekdayName + "(" + day + ")";
                 document.getElementById(`f-day${i + 1}-icon`).src = `${data.forecast.forecastday[0].day.condition.icon}`;
-                document.getElementById(`f-day${i + 1}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}`;
-                document.getElementById(`f-day${i + 1}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}`;
+                document.getElementById(`f-day${i + 1}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}` + "°C";
+                document.getElementById(`f-day${i + 1}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}` + "°C";
 
                 checkbox.addEventListener('change', function () {
                     let reop = {
@@ -249,14 +258,14 @@ function futureSevnDays(location) {
                         // Checkbox is checked, switch to Fahrenheit
                         currentUnit.textContent = '°F';
                         changingUnit.textContent = '°C';
-                        document.getElementById(`f-day${i + 1}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_f}`;
-                        document.getElementById(`f-day${i + 1}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_f}`;
+                        document.getElementById(`f-day${i + 1}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_f}` + "°F";
+                        document.getElementById(`f-day${i + 1}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_f}` + "°F";
                     } else {
                         // Checkbox is unchecked, switch to Celsius
                         currentUnit.textContent = '°C';
                         changingUnit.textContent = '°F';
-                        document.getElementById(`f-day${i + 1}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}`;
-                        document.getElementById(`f-day${i + 1}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}`;
+                        document.getElementById(`f-day${i + 1}-date-max`).innerHTML = `${data.forecast.forecastday[0].day.maxtemp_c}` + "°C";
+                        document.getElementById(`f-day${i + 1}-date-min`).innerHTML = `${data.forecast.forecastday[0].day.mintemp_c}` + "°C";
                     }
                 });
 
@@ -286,9 +295,8 @@ document.getElementById('theme').addEventListener('click', toggleTheme);
 
 // Initial setup
 updateClock();
+getGeoLocation()
 setInterval(updateClock, 1000);
-updatePastThreeDays(mylocation);
-futureSevnDays(mylocation);
 cityWeather('kandy', 'city-1');
 cityWeather('nuwaraeliya', 'city-2');
 cityWeather('jaffna', 'city-3');
@@ -298,8 +306,8 @@ cityWeather('malabe', 'city-4');
 
 // Search function
 function search() {
-     mylocation = document.getElementById("searchTxt").value;
-    currentWeather(mylocation, 'current');
+    mylocation = document.getElementById("searchTxt").value;
+    currentWeather(mylocation);
     updatePastThreeDays(mylocation);
     futureSevnDays(mylocation);
     currentMap(mylocation);
@@ -321,9 +329,12 @@ let hour = new Date().getHours();
 const backgroundImageContainer = document.querySelector('.forecast-now');
 
 if (hour > 6 && hour < 18) {
-    backgroundImageContainer.style.backgroundImage = 'url("assets/sun.jpg")';
+    console.log("sdgghd");
+    
+    backgroundImageContainer.style.backgroundImage = 'url("")';
 }
 else {
+    console.log("dsgsdg");
     backgroundImageContainer.style.backgroundImage = 'url("assets/moon.jpg")';
 }
 
@@ -375,6 +386,8 @@ async function currentMap(currentLocation) {
 
 async function fetchLocationData(location) {
     try {
+        console.log(location);
+
         const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=ee16cdd2901442cdabd52206240703&q=${location}&days=7`);
         const data = await response.json();
         console.log(data);
