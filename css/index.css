@@ -1,11 +1,93 @@
-body{
-    background-size: 100vw 100vh;
-    color: #ffffff;
-    margin: 0%;
-    
+body {
+    background: #69a8e3f5;
+    font-family: 'Times New Roman', Times, serif;
+
 }
 
-/* toggle button for theam */
+a {}
+
+.heading {
+    text-align: center;
+    font-weight: bold;
+
+
+}
+
+#location {
+    color: white;
+}
+
+#temparature {
+    text-align: center;
+    font-weight: 250vw;
+    font-size: 6vw;
+    color: #FDB600
+}
+
+#current-temprature {
+    margin-left: 0px;
+}
+
+#week {
+    text-align: center;
+    font-weight: 250vw;
+    font-size: 6vw;
+    background-color: #19A4E0;
+    border-radius: 10px;
+}
+
+#week1 {
+
+    background-color: #093649;
+    border-radius: 10px;
+    margin-right: 10%;
+    margin-left: 10%;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+/* #sunset {
+    background-image: url('./../assets/sun.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 10vh;
+} */
+#forecast-now {
+    background-image: url('./../assets/moon.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 10vh;
+    color: white;
+}
+
+.txt-white {
+    color: white;
+}
+
+#forecast-card .table th,
+#forecast-card .table td {
+    background-color: transparent;
+
+}
+
+#forecast-card .table td {
+    text-align: end;
+}
+
+
+#city-forecast .table th,
+#city-forecast .table td {
+    background-color: transparent;
+
+}
+
+
+#side-conrtainer {
+    background-color: #50505042;
+    box-shadow: 10px, 0px, 8px, 8px, rgb(0, 0, 0);
+}
+
 label#theme {
     width: 80px;
     height: 40px;
@@ -16,6 +98,7 @@ label#theme {
     box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4);
     cursor: pointer;
 }
+
 label#theme:after {
     content: "";
     width: 30px;
@@ -28,6 +111,7 @@ label#theme:after {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
     transition: 0.3s;
 }
+
 input#darkmode-toggle {
     width: 0;
     height: 0;

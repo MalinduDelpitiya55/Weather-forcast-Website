@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,15 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast</title>
     <link rel="stylesheet" href="./css/index.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 
-<body>
-    <nav class="navbar bg-body-tertiary">
+<body class="bg-warningy" data-bs-theme="light"> <!--data-bs-theme="dark"-->
+
+    <!-- ===================================================    nav bar      ======================================-->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar bg-dark-subtle">
         <div class="container-fluid">
-            <a class="navbar-brand">Weather Forecast</a>
-            <form class="d-flex" role="search">
+            <a class="navbar-brand" href="#">Weather Check</a>
+
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#todays-data">Today</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#weekdata">Future</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#past-Days">Past</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#city-forecast">Cities</a>
+                    </li>
+
+                </ul>
+                <div class="d-flex flex-row justify-content-around " role="search">
+                    <input class="form-control " type="search" placeholder="Search" id="searchTxt">
+                    <button class="btn btn-outline-success" id="searchBtn" onclick="search()">Search</button>
+                </div>
                 <div class=" ">
                     <input type="checkbox" id="darkmode-toggle">
                     <label for="darkmode-toggle" id="theme">
@@ -22,529 +47,393 @@
                         <img src="https://img.icons8.com/ios/50/crescent-moon.png" alt="crescent-moon" class="moon" />
                     </label>
                 </div>
-            </form>
+                
+                </div>
+            </div>
         </div>
     </nav>
-    <ul class="nav justify-content-center mt-4">
-        <li class="nav-item">
-            <form class="d-flex" role="search">
-                <input class="form-control me-3" type="search" placeholder="Search" aria-label="Search"
-                    style="width: 450px;">
-                <button class="btn btn-outline-success" type="submit" id="searchBtn">Search</button>
-            </form>
-        </li>
-    </ul>
+  
 
-    <div class="d-flex flex-row col-12 mt-5 justify-content-around ">
-        <div class="col-6 rounded-3 ">
-            <div class="col-12 rounded-3 border border-dark">
-                <div class=" d-flex flex-row justify-content-around align-content-center mt-5 ">
-                    <div class="align-content-center">
-                        <h1 class="align-content-center">
-                            <span class="fs-1" id="current-temparature"><!--CURRENT Temparature--></span>°C
-                        </h1 class="align-content-center">
-                        <p><span class="fs-4" id="current-high-temparature"><!--CURRENT Temparature--></span>°C<br><span
-                                class="fs-5" id="current-low-temparature"><!--CURRENT Temparature--></span>°C</p>
-                    </div>
-                    <div class="align-content-center">
-                        <h3>
-                            <span id="current-city">Weligama</span>, <span id="current-country">LK</span>
-                        </h3>
-                        <p>Friday, 06 Sep 2024 | Local time: 09:30 PM</p>
-
-                    </div>
-                    <div class="align-content-center">
-                        <img src="" alt="" width="100" id="current-cloud-condition-icon"><br>
-                    </div>
-                </div>
-                <div class="d-flex flex-row mx-2 justify-content-center mb-5">
-                    <div class="d-flex flex-row ">
-                        <div>
-                            <div>
-                                <img src="./images/icons/sunrise.png" alt="sunrise" width="32" height="32">
-                            </div>
-                            <div>
-                                sunrise
-                            </div>
-                        </div>
-                        <div class="align-content-center"><span class=" fs-3" id="sun-rise"></span></div>
-                    </div>
-                    <div class="d-flex flex-row mx-5">
-                        <div>
-                            <div>
-                                <img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32">
-                            </div>
-                            <div>
-                                sunset
-                            </div>
-                        </div>
-                        <div class="align-content-center"><span class=" fs-3" id="sun-set"></span></div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-12 rounded-3 border border-dark mt-5 p-5">
-                <div class="d-flex flex-row justify-content-around">
-                    <div>
-                        <div class="d-flex flex-row ">
-                            <div><img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32"></div>
-                            <div class="align-content-center">Wind</div>
-
-
-                        </div>
-                        <div class="align-content-center"><span id="wind"></span>km/h</div>
-                        <div class="d-flex flex-row mt-5">
-                            <div><img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32"></div>
-                            <div class="align-content-center">Humidity</div>
-                        </div>
-                        <div class="align-content-center"><span id="humidity"></span>%</div>
-                    </div>
-
-                    <div>
-                        <div class="d-flex flex-row ">
-                            <div><img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32"></div>
-                            <div class="align-content-center">Visibility</div>
-                        </div>
-                        <div class="align-content-center"><span id="visibility"></span>km</div>
-                        <div class="d-flex flex-row mt-5">
-                            <div><img src="./images/icons/sundown.png" alt="sunrise" width="32" height="32"></div>
-                            <div class="align-content-center">Feels Like</div>
-                        </div>
-                        <div class="align-content-center"><span class="fs-5" id="current-feel-temparature"></span>
-                            <span class="fs-5 ">°C</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 rounded-3 border border-dark mt-5 p-3 justify-content-around">
-                <h3><b>City Forcast</b></h3>
-                <div class="d-flex flex-wrap justify-content-around">
-                    <div class=" rounded-3 border border-dark mt-3 p-5 justify-content-center">
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <h5><span class="fs-4" id="city-1-name"></span></h5>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <img src="" alt="" width="90" id="city-1-forecast">
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div id="city-1-text">
-                                <p>light rain</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <span class="fs-4" id="city-1-temparature">
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" rounded-3 border border-dark mt-3 p-5 justify-content-center">
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <h5><span class="fs-4" id="city-2-name"></span></h5>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <img src="" alt="" width="90" id="city-2-forecast">
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div id="city-2-text">
-                                <p>light rain</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <span class="fs-4" id="city-2-temparature">
-                            </div>
-                        </div>
-                    </div>
-                    <div class=" rounded-3 border border-dark mt-3 p-5 justify-content-center">
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <h5><span class="fs-4" id="city-3-name"></span></h5>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <img src="" alt="" width="90" id="city-3-forecast">
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div id="city-3-text">
-                                <p>light rain</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div>
-                                <span class="fs-4" id="city-3-temparature">
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-4 ">
-            <div class="border border-dark rounded-3 p-3 ">
-                <h3><b>Daily Forcast</b></h3>
-                <div>
-                    <br>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day-1">Sun</p>
-                        </div>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="f-day1-icon">
-                        </div>
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day1-date-temp">2</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day1-date-wind">5.78 km/h</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day1-date-text">moderate rai</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day1-date-rain">7 %</p>
-                        </div>
-
-                    </div>
-                    <hr>
-                </div>
-                <div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day-2">Sun</p>
-                        </div>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="f-day2-icon">
-                        </div>
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day2-date-temp">2</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day2-date-wind">5.78 km/h</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day2-date-text">moderate rai</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day2-date-rain">7 %</p>
-                        </div>
-
-                    </div>
-                    <hr>
-                </div>
-
-                <div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day-3">Sun</p>
-                        </div>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="f-day3-icon">
-                        </div>
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day3-date-temp">2</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day3-date-wind">5.78 km/h</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day3-date-text">moderate rai</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day3-date-rain">7 %</p>
-                        </div>
-
-                    </div>
-                    <hr>
-                </div>
-                <div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day-4">Sun</p>
-                        </div>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="f-day4-icon">
-                        </div>
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day4-date-temp">2</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day4-date-wind">5.78 km/h</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day4-date-text">moderate rai</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day4-date-rain">7 %</p>
-                        </div>
-
-                    </div>
-                    <hr>
-                </div>
-                <div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day-5">Sun</p>
-                        </div>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="f-day5-icon">
-                        </div>
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day5-date-temp">2</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day5-date-wind">5.78 km/h</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day5-date-text">moderate rai</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day5-date-rain">7 %</p>
-                        </div>
-
-                    </div>
-                    <hr>
-                </div>
-                <div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day-6">Sun</p>
-                        </div>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="f-day6-icon">
-                        </div>
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day6-date-temp">2</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day6-date-wind">5.78 km/h</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day6-date-text">moderate rai</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day6-date-rain">7 %</p>
-                        </div>
-
-                    </div>
-                    <hr>
-                </div>
-                <div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day-7">Sun</p>
-                        </div>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="f-day7-icon">
-                        </div>
-                        <div class="align-content-center">
-                            <p class="fs-5 m-2" id="f-day7-date-temp">2</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day7-date-wind">5.78 km/h</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day7-date-text">moderate rai</p>
-                        </div>
-                        <div class="align-content-center d-flex flex-row"><i
-                                class="fa-solid fa-cloud align-content-center"></i>
-                            <p class="fs-6 m-2" id="f-day7-date-rain">7 %</p>
-                        </div>
-
-                    </div>
-                    <hr>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="mt-5 d-flex justify-content-center align-items-center">
-        <div class="col-11 border border-dark mt-5 p-3">
-            <h3><b>Today Hourly Forcast</b></h3>
-
-            <div class="">
+    <!-- =====================================================   hero section    ======================================-->
+    <div class="container-fluid d-flex flex-lg-row flex-md-column flex-sm-column flex-sm-column flex-column justify-content-around bg-info-subtle "
+        id="hero-section">
+        <!--================================================    today forecast   ========================================-->
+        <div class="row card col-lg-7 col-md-12 mb-5 col-sm-12 rounded-5 mt-5 bg-gradient  ">
+            <div class="card-body  " id="todays-data">
+                <!-- =================================================    date time     ============================================-->
                 <div
-                    class="container-fluid d-flex flex-lg-row flex-md-row flex-sm-row flex-sm-row flex-row  justify-content-around mt-3 ">
-                    <div class="card rounded-4   text-center align-items-center bg-info-subtle p-2 m-2">
-                        <strong>
-                            <p class="fs-4 m-2">00:00 AM</p>
-                        </strong><br>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="today-1-icon">
-                        </div>
-                        <div>
-                            <p class="fs-6 m-2" id="today-1-text">moderate rai</p>
-                        </div>
+                    class="container-fluid d-flex flex-lg-row flex-md-row flex-sm-column flex-sm-column flex-column justify-content-around ">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <span class="fs-2 fw-semibold  ">Forecast in</span>
+                        <span class="fw-bold fs-1" id="current-city"></span>,
+                        <span class="fw-bold fs-1" id="current-country"></span><br>
+                        <span class="fs-6" id="date-time"></span>
 
-                        <div>
-                            <span class="fs-6 " id="day-1-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                    </div>
+
+
+                </div>
+                <!-- ================================================   forecast details    =============================================== -->
+                <div
+                    class="container-fluid d-flex flex-lg-row flex-md-row flex-sm-column flex-sm-column flex-column justify-content-around mt-2">
+                    <div class="forecast-now col-lg-5 m-1 col-md-4 col-sm-12 card bg-info-subtle rounded-5 mt-3  "
+                        id="forecast-now">
+                        <div
+                            class="card-body d-flex flex-lg-row flex-md-row flex-sm-row flex-sm-row flex-row justify-content-around ">
+                            <div class="col">
+                                <div class="">
+
+                                    <span class="fs-1" id="current-temparature"><!--CURRENT Temparature--></span>
+
+                                    <span class="fs-1" id="current-unit">°C</span>
+                                    <span class="fs-1">/</span>
+                                    <input type="checkbox" class="visually-hidden  " id="check-unit"><label
+                                        for="check-unit"><span class="fs-4 text-info "
+                                            id="Changing-unit">°F</span></label>
+                                </div>
+
+                                <div class="mt-3 ">
+                                    <span class="fs-4 " id="current-cloud-condition"></span>
+                                    <div class="mt-3 ">
+                                        <span class="fs-5 mt-3 ">Feels like </span><br>
+                                        <span class="fs-5" id="current-feel-temparature"></span>
+                                        <span class="fs-5 ">°C</span><br>
+                                        <span class="fs-6 fw-bolder " id="umbrella-required"></span><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-end">
+                                <span class="fs-5 ">High </span>
+                                <span class="fs-3 " id="current-high-temparature"></span>
+                                <span class="fs-3 ">°C</span><br>
+
+                                <span class="fs-5 ">Low </span>
+                                <span class="fs-4 " id="current-low-temparature"></span>
+                                <span class="fs-4 ">°C</span><br>
+
+                                <div class="mt-3 ">
+                                    <img src="" alt="" width="100" id="current-cloud-condition-icon"><br>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    <div class="card rounded-4 text-center align-items-center bg-info-subtle p-2 m-2">
-                        <strong>
-                            <p class="fs-4 m-2" id="f-day-2">03:00 AM</p>
-                        </strong><br>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="today-2-icon">
-                        </div>
-                        <div>
-                            <p class="fs-6 m-2" id="today-2-text">moderate rai</p>
-                        </div>
+                    <div class="col-lg-4 m-1 col-md-3 col-sm-12 card rounded-5 mt-3 bg-success-subtle"
+                        id="forecast-card">
+                        <div class="card-body ">
+                            <table class="table border-bottom border-black " id="table">
+                                <tr>
+                                    <th>Visibility</th>
+                                    <td><span id="visibility"></span>km <img width="20" height="20"
+                                            src="https://img.icons8.com/ios-glyphs/30/000000/invisible.png"
+                                            alt="invisible" /></td>
+                                </tr>
+                                <tr>
+                                    <th>Dew Point</th>
+                                    <td><span id="dew-point"></span>°C <img width="20" height="20"
+                                            src="https://img.icons8.com/ios/50/000000/dew-point.png" alt="dew-point" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Wind</th>
+                                    <td><span id="wind"></span>km/h <img width="20" height="20"
+                                            src="https://img.icons8.com/pastel-glyph/64/wind--v1.png" alt="wind--v1" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Humidity</th>
+                                    <td><span id="humidity"></span>% <img width="20" height="20"
+                                            src="https://img.icons8.com/ios/50/000000/hygrometer.png"
+                                            alt="hygrometer" /></td>
+                                </tr>
+                                <tr>
+                                    <th>Cloudiness</th>
+                                    <td><span id="cloudiness"></span>% <img width="20" height="20"
+                                            src="https://img.icons8.com/sf-black/64/000000/cloud.png" alt="cloud" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Rain Chance</th>
+                                    <td><span id="rainChance"></span>% <img width="20" height="20"
+                                            src="https://img.icons8.com/sf-black/64/000000/cloud.png" alt="cloud" />
+                                    </td>
+                                </tr>
 
-                        <div>
-                            <span class="fs-6 " id="day-2-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                            </table>
                         </div>
                     </div>
-                    <div class="card rounded-4 text-center align-items-center bg-info-subtle p-2 m-2">
-                        <strong>
-                            <p class="fs-4 m-2" id="f-day-3">06:00 AM</p>
-                        </strong><br>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="today-3-icon">
-                        </div>
-                        <div>
-                            <p class="fs-6 m-2" id="today-3-text">moderate rai</p>
-                        </div>
-
-                        <div>
-                            <span class="fs-6 " id="day-3-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                    <div class="col-lg-3 m-1 col-md-2 col-sm-12 card rounded-5 mt-3 align-items-center bg-danger-subtle"
+                        id="sunset">
+                        <div class="card-body text-center">
+                            <img src="./assets/sun.png" alt="" width="40"><br>
+                            <h3 class=" fs-5">Sunrise</h3>
+                            <span class=" fs-3" id="sun-rise"></span>
+                            <div class="mt-4 align-items-center">
+                                <img src="./assets/moon.png" alt="" width="40"><br>
+                                <h3 class=" fs-5">Sunset</h3>
+                                <span class=" fs-3" id="sun-set"></span>
+                            </div>
                         </div>
                     </div>
-                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
-                        <strong>
-                            <p class="fs-4 m-2" id="f-day-4">09:00 AM</p>
-                        </strong><br>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="today-4-icon">
-                        </div>
-                        <div>
-                            <p class="fs-6 m-2" id="today-4-text">moderate rai</p>
-                        </div>
 
-                        <div>
-                            <span class="fs-6 " id="day-4-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
-                        </div>
-                    </div>
-                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
-                        <strong>
-                            <p class="fs-4 m-2" id="f-day-5">12:00 PM</p>
-                        </strong><br>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="today-5-icon">
-                        </div>
-                        <div>
-                            <p class="fs-6 m-2" id="today-5-text">moderate rai</p>
-                        </div>
 
-                        <div>
-                            <span class="fs-6 " id="day-5-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
-                        </div>
-                    </div>
-                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
-                        <strong>
-                            <p class="fs-4 m-2" id="f-day-6">03:00 PM</p>
-                        </strong><br>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="today-6-icon">
-                        </div>
-                        <div>
-                            <p class="fs-6 m-2" id="today-6-text">moderate rai</p>
-                        </div>
+                </div>
+                <!-- ===============================================    future forecast     =============================================== -->
+                <div
+                    class="container-fluid d-flex flex-lg-row flex-md-row flex-sm-column flex-sm-column flex-column justify-content-around mt-3">
+                    <div class="col-lg-12 col-md-11 col-sm-12  ">
+                        <div class="" id="weekdata">
+                            <div
+                                class="container-fluid d-flex flex-lg-row flex-md-row flex-sm-row flex-sm-row flex-row flex-wrap justify-content-start mt-5 ">
+                                <div class=" text-start align-items-center ">
 
-                        <div>
-                            <span class="fs-6 " id="day-6-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
-                        </div>
-                    </div>
-                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
-                        <strong>
-                            <p class="fs-4 m-2" id="f-day-7">06:00 PM</p>
-                        </strong><br>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="today-7-icon">
-                        </div>
-                        <div>
-                            <p class="fs-6 m-2" id="today-7-text">moderate rai</p>
-                        </div>
+                                    <span class="fs-2 fw-semibold  ">Future </span>
+                                    <span class="fw-bolder  fs-1">7 Days</span>
 
-                        <div>
-                            <span class="fs-6 " id="day-7-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
-                        </div>
-                    </div>
-                    <div class="card rounded-4 text-center align-items-center bg-info-subtle m-2 p-2">
-                        <strong>
-                            <p class="fs-4 m-2" id="f-day-7">09:00 PM</p>
-                        </strong><br>
-                        <div class="align-content-center">
-                            <img src="" alt="" width="50" id="today-8-icon">
-                        </div>
-                        <div>
-                            <p class="fs-6 m-2" id="today-8-text">moderate rai</p>
-                        </div>
+                                </div>
+                            </div>
 
-                        <div>
-                            <span class="fs-6 " id="day-8-date-temp">11°C</span><span class="fs-5 ">°C</span><br>
+                            <!-- future data -->
+                            <div
+                                class="container-fluid d-flex flex-lg-row flex-md-row flex-sm-row flex-sm-row flex-row flex-wrap justify-content-around mt-3 ">
+                                <div class="card rounded-4   text-center align-items-center bg-info-subtle ">
+                                    <strong>
+                                        <p class="fs-4 m-2" id="f-day-1">Sun</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="f-day1-icon"><br>
+                                    <div>
+                                        <span class="fs-4 " id="f-day1-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="fs-6 " id="f-day1-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+                                </div>
+                                <div class="card rounded-4 text-center align-items-center bg-info-subtle">
+                                    <strong>
+                                        <p class="fs-4 m-2" id="f-day-2">Mon</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="f-day2-icon"><br>
+                                    <div>
+                                        <span class="fs-4 " id="f-day2-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="fs-6 " id="f-day2-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+                                </div>
+                                <div class="card rounded-4 text-center align-items-center bg-info-subtle">
+                                    <strong>
+                                        <p class="fs-4 m-2" id="f-day-3">Tue</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="f-day3-icon"><br>
+                                    <div>
+                                        <span class="fs-4 " id="f-day3-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="fs-6 " id="f-day3-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+
+                                </div>
+                                <div class="card rounded-4 text-center align-items-center bg-info-subtle">
+                                    <strong>
+                                        <p class="fs-4 m-2" id="f-day-4">Sun</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="f-day4-icon"><br>
+                                    <div>
+                                        <span class="fs-4 " id="f-day4-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="fs-6 " id="f-day4-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+                                </div>
+                                <div class="card rounded-4 text-center align-items-center bg-info-subtle">
+                                    <strong>
+                                        <p class="fs-4 m-2" id="f-day-5">Mon</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="f-day5-icon"><br>
+                                    <div>
+                                        <span class="fs-4 " id="f-day5-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="fs-6 " id="f-day5-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+                                </div>
+                                <div class="card rounded-4 text-center align-items-center bg-info-subtle">
+                                    <strong>
+                                        <p class="fs-4 m-2" id="f-day-6">Tue</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="f-day6-icon"><br>
+                                    <div>
+                                        <span class="fs-4 " id="f-day6-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="fs-6 " id="f-day6-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+                                </div>
+                                <div class="card rounded-4 text-center align-items-center bg-info-subtle">
+                                    <strong>
+                                        <p class="fs-4 m-2" id="f-day-7">Tue</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="f-day7-icon"><br>
+                                    <div>
+                                        <span class="fs-4 " id="f-day7-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="fs-6 " id="f-day7-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
+        <!-- ==============================================   city and past forecast     =============================================-->
+        <div class="row card col-lg-4 col-md-12 col-sm-12 mb-5 rounded-5 mt-5 " id="side-conrtainer">
+            <div class="card-body">
+                <div id="past-Days">
+                    <colspan="3"><span class="fs-3 fw-semibold  ">Past </span>
+                        <span class="fw-bolder  fs-2">3 Days</span>
+                        <div
+                            class="container-fluid d-flex flex-lg-row flex-md-row flex-sm-row flex-sm-row flex-row flex-wrap justify-content-around ">
+                            <!-- =====================================================  past data day 1   =====================================================-->
+                            <div class="card rounded-4 text-center align-items-center bg-info-subtle">
+                                <div class="m-2">
+                                    <strong>
+                                        <p class="fs-4 " id="p-day-1">Sun</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="p-day1-img"><br>
+                                    <div>
+                                        <span class="fs-4 " id="p-day1-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+                                    <div>
+                                        <span class="fs-6 " id="p-day1-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- =====================================================  past data day 2   =====================================================-->
+                            <div class="card rounded-4 text-center align-items-center bg-info-subtle">
+                                <div class="m-2">
+                                    <strong>
+                                        <p class="fs-4 " id="p-day-2">Mon</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="p-day2-img"><br>
+                                    <div>
+                                        <span class="fs-4 " id="p-day2-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="fs-6 " id="p-day2-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- =====================================================  past data day 3   =====================================================-->
+                            <div class="card rounded-4 text-center align-items-center bg-info-subtle">
+                                <div class="m-2">
+                                    <strong>
+                                        <p class="fs-4 " id="p-day-3">Tue</p>
+                                    </strong><br>
+                                    <img src="" alt="" width="100" id="p-day3-img"><br>
+                                    <div>
+                                        <span class="fs-4 " id="p-day3-date-max">11°C</span><span
+                                            class="fs-5 ">°C</span>
+                                    </div>
+
+                                    <div>
+                                        <span class="fs-6 " id="p-day3-date-min">11°C</span><span
+                                            class="fs-5 ">°C</span><br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <!-- =====================================================  City data   =====================================================-->
+                <div class="mt-5 " id="city-forecast">
+                    <table class="table  ">
+                        <thead>
+                            <tr>
+                                <th colspan="3"><span class="fs-3 fw-semibold  ">Forecast in Other</span>
+                                    <span class="fw-bolder  fs-2">Cities</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider text-start  ">
+                            <tr class="mt-5">
+                                <td><span class="fs-4" id="city-1-name"></span><br><span class="fs-6"
+                                        id="city-1-country"></span></td>
+                                <td><img src="" alt="" width="90" id="city-1-forecast"></td>
+                                <td><span class="fs-4" id="city-1-temparature"></span><span
+                                        class="fs-4 ">°C</span><br><span class="fs-6" id="city-1-text"></span></td>
+                            </tr>
+                            <tr class="mt-5">
+                                <td><span class="fs-4" id="city-2-name"></span><br><span class="fs-6"
+                                        id="city-2-country"></span></td>
+                                <td><img src="" alt="" width="90" id="city-2-forecast"></td>
+                                <td><span class="fs-4" id="city-2-temparature"></span><span
+                                        class="fs-4 ">°C</span><br><span class="fs-6" id="city-2-text"></span></td>
+                            </tr>
+                            <tr class="mt-5">
+                                <td><span class="fs-4" id="city-3-name"></span><br><span class="fs-6"
+                                        id="city-3-country"></span></td>
+                                <td><img src="" alt="" width="90" id="city-3-forecast"></td>
+                                <td><span class="fs-4" id="city-3-temparature"></span><span
+                                        class="fs-4 ">°C</span><br><span class="fs-6" id="city-3-text"></span></td>
+                            </tr>
+                            <tr class="mt-5">
+                                <td><span class="fs-4" id="city-4-name"></span><br><span class="fs-6"
+                                        id="city-4-country"></span></td>
+                                <td><img src="" alt="" width="90" id="city-4-forecast"></td>
+                                <td><span class="fs-4" id="city-4-temparature"></span><span
+                                        class="fs-4 ">°C</span><br><span class="fs-6" id="city-4-text"></span></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
 
     </div>
+    <div class=" bg-info-subtle mt-0">
+        <div class=" bg-info-subtle card m-5">
+            <div id="map" class="container-fluid card-body " style="width: 100%; height: 550px;"></div>
+        </div>
+    </div>
+
+
+
+
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="./js/index.js"></script>
+
 
 </body>
 
