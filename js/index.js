@@ -14,6 +14,7 @@ async function fetchData(endpoint) {
     }
 }
 async function getGeoLocation() {
+    console.log("getGeoLocation");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(success);
     } else {
@@ -22,6 +23,7 @@ async function getGeoLocation() {
 }
 
 async function success(position) {
+    console.log(position);
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
     console.log(`${latitude}, ${longitude}`);
